@@ -6,10 +6,10 @@ baseurl: ""
 
 aux_links:
   "GitHub":
-    - "https://github.com/YOUR_USERNAME/fastforward"
+    - "https://github.com/Ideademic/fastforward"
 
 nav_order: 1
 
 footer_content: "FastForward — Apache 2.0"
 
-color_scheme: light
+color_scheme: dark
