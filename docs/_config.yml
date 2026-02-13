@@ -1,0 +1,15 @@
+title: FastForward
+description: Documentation for the FastForward boilerplate
+remote_theme: just-the-docs/just-the-docs
+url: ""
+baseurl: ""
+
+aux_links:
+  "GitHub":
+    - "https://github.com/YOUR_USERNAME/fastforward"
+
+nav_order: 1
+
+footer_content: "FastForward — Apache 2.0"
+
+color_scheme: light
