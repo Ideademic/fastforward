@@ -1,3 +1,6 @@
+// EXAMPLE PAGE — replace or restyle this login page to fit your app.
+// Demonstrates both password and email-code auth flows using useAuth().
+
 import { useState } from 'preact/hooks';
 import { route } from 'preact-router';
 import { useAuth } from '../lib/auth.jsx';

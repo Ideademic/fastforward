@@ -1,13 +1,18 @@
+// EXAMPLE LAYOUT — replace this with your own shell/nav.
+// Demonstrates reading auth state to show login/logout links.
+
 import { useAuth } from '../lib/auth.jsx';
 import { route } from 'preact-router';
 
-export function Layout({ children }) {
+export function Layout({ children, hideNav }) {
   const { user, logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();
     route('/');
   };
+
+  if (hideNav) return <>{children}</>;
 
   return (
     <div class="min-h-screen bg-gray-50">

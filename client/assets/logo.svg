@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Circle background — zinc-900 -->
+  <circle cx="64" cy="64" r="64" fill="#18181b"/>
+
+  <!-- Back arrow — zinc-500 -->
+  <polygon points="32,34 62,64 32,94" fill="#71717a"/>
+
+  <!-- Middle arrow — zinc-400 to blue transition -->
+  <polygon points="52,34 82,64 52,94" fill="#a1a1aa"/>
+
+  <!-- Front arrow — blue-500 -->
+  <polygon points="72,34 102,64 72,94" fill="#3b82f6"/>
+</svg>

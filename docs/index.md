@@ -4,7 +4,12 @@ layout: default
 nav_order: 1
 ---
 
+<p align="center">
+  <img src="assets/logo.svg" alt="FastForward" width="96" height="96" />
+</p>
+
 # FastForward
+{: .text-center }
 
 A ready-to-go Node.js boilerplate with **Preact**, **Hapi.js**, **Postgres**, and a built-in dual-mode auth system. Styled with **Tailwind CSS v4** and containerized with **Docker**.
 

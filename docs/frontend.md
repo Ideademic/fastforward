@@ -39,18 +39,20 @@ To add a new page, create a component in `client/pages/` and add a `<Route path=
 
 ## Pages
 
+**These are all examples.** They exist to demonstrate how auth wiring works — replace them with your own pages. The only file you should keep as-is is `client/lib/auth.jsx` (the auth provider and hook).
+
 | Page | Path | Auth Required | Description |
 |------|------|--------------|-------------|
-| `home.jsx` | `/` | No | Landing page with CTA links |
-| `login.jsx` | `/login` | No | Tabbed login (password / email code) |
-| `register.jsx` | `/register` | No | Registration form |
-| `dashboard.jsx` | `/dashboard` | Yes | User profile, redirects to `/login` if not authenticated |
+| `home.jsx` | `/` | No | Example landing page with CTA links |
+| `login.jsx` | `/login` | No | Example tabbed login (password / email code) |
+| `register.jsx` | `/register` | No | Example registration form |
+| `dashboard.jsx` | `/dashboard` | Yes | Example protected page, redirects to `/login` if not authenticated |
 
 ## Components
 
 ### `Layout` (`client/components/layout.jsx`)
 
-Wraps every page. Renders the top nav bar with auth-aware links:
+**Example layout — replace with your own.** Wraps every page. Renders the top nav bar with auth-aware links:
 
 - **Logged out**: Login, Register
 - **Logged in**: Dashboard, Logout

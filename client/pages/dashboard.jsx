@@ -1,3 +1,6 @@
+// EXAMPLE PAGE — replace this with your own authenticated page.
+// Demonstrates a protected route that redirects to /login when not authenticated.
+
 import { useAuth } from '../lib/auth.jsx';
 import { route } from 'preact-router';
 

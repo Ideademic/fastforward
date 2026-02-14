@@ -8,7 +8,7 @@ nav_order: 2
 
 ## Prerequisites
 
-- Node.js 20+
+- Node.js 24+
 - Docker and Docker Compose
 - (Optional) An SMTP server for email code auth — [Mailpit](https://mailpit.axllent.org) works well for local dev
 

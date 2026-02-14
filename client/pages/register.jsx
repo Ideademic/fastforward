@@ -1,3 +1,6 @@
+// EXAMPLE PAGE — replace or restyle this registration page to fit your app.
+// Demonstrates the register() flow from useAuth().
+
 import { useState } from 'preact/hooks';
 import { route } from 'preact-router';
 import { useAuth } from '../lib/auth.jsx';
