@@ -1,22 +1,34 @@
 // EXAMPLE PAGE — replace or restyle this registration page to fit your app.
 // Demonstrates the register() flow from useAuth().
 
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 import { route } from 'preact-router';
 import { useAuth } from '../lib/auth.jsx';
+import { api } from '../lib/api.js';
 
 export function Register() {
   const { register } = useAuth();
+  const [providers, setProviders] = useState(null);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    api.get('/api/auth/providers').then(setProviders).catch(() => {});
+  }, []);
+
+  const emailRequired = !providers || providers.passwordRequireEmail !== false;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      await register({ username, email, password });
+      const payload = { username, password };
+      if (email) payload.email = email;
+      if (displayName) payload.display_name = displayName;
+      await register(payload);
       route('/dashboard');
     } catch (err) {
       setError(err.message);
@@ -53,6 +65,19 @@ export function Register() {
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
+            Display Name
+          </label>
+          <input
+            type="text"
+            value={displayName}
+            onInput={(e) => setDisplayName(e.target.value)}
+            class={inputClass}
+            maxLength={255}
+          />
+          <p class="text-xs text-gray-500 mt-1">Optional</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
             Email
           </label>
           <input
@@ -60,8 +85,11 @@ export function Register() {
             value={email}
             onInput={(e) => setEmail(e.target.value)}
             class={inputClass}
-            required
+            required={emailRequired}
           />
+          {!emailRequired && (
+            <p class="text-xs text-gray-500 mt-1">Optional</p>
+          )}
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">

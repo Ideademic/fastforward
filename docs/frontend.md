@@ -45,8 +45,10 @@ To add a new page, create a component in `client/pages/` and add a `<Route path=
 |------|------|--------------|-------------|
 | `home.jsx` | `/` | No | Example landing page with CTA links |
 | `login.jsx` | `/login` | No | Example tabbed login (password / email code) |
-| `register.jsx` | `/register` | No | Example registration form |
+| `register.jsx` | `/register` | No | Example registration form (email conditionally required based on server config, includes display name field) |
 | `dashboard.jsx` | `/dashboard` | Yes | Example protected page, redirects to `/login` if not authenticated |
+| `forgot-password.jsx` | `/forgot-password` | No | Password reset request form |
+| `reset-password.jsx` | `/reset-password` | No | Set new password (token from URL) |
 
 ## Components
 
@@ -83,13 +85,24 @@ A thin wrapper around `fetch` that:
 - Includes credentials (cookies)
 - Parses JSON responses
 - Throws on non-2xx status with the server's error message
+- Automatically reads the `crumb` cookie and sends it as the `x-csrf-token` header on all POST/PUT/DELETE requests
+- Exports `get`, `post`, and `delete` methods
 
 ```js
 import { api } from '../lib/api.js';
 
 const data = await api.get('/api/health');
 const result = await api.post('/api/auth/login', { username, password });
+await api.delete('/api/auth/account');
 ```
+
+### CSRF Handling
+
+The API client (`client/lib/api.js`) automatically reads the `crumb` cookie and sends it as the `x-csrf-token` header on all POST/PUT/DELETE requests. No manual CSRF handling is needed in page components.
+
+### OAuth Buttons
+
+The login page fetches `GET /api/auth/providers` on mount and dynamically shows OAuth buttons as `<a>` links to `/api/auth/oauth/{provider}`. Tabs are conditionally shown based on which auth methods are enabled.
 
 ## Styling
 

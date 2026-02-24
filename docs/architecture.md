@@ -10,41 +10,57 @@ nav_order: 3
 
 ```
 fastforward/
-├── client/                     # Frontend (Preact + Tailwind)
+├── client/
 │   ├── components/
-│   │   └── layout.jsx          # Top nav, auth-aware links
+│   │   └── layout.jsx
 │   ├── lib/
-│   │   ├── api.js              # Fetch wrapper (GET/POST, credentials)
-│   │   └── auth.jsx            # AuthContext provider + useAuth hook
+│   │   ├── api.js              # Fetch wrapper (GET/POST/DELETE, CSRF, credentials)
+│   │   └── auth.jsx
 │   ├── pages/
-│   │   ├── home.jsx            # Landing page
-│   │   ├── login.jsx           # Password + email code tabs
-│   │   ├── register.jsx        # Registration form
-│   │   └── dashboard.jsx       # Protected page (redirects if not logged in)
-│   ├── app.jsx                 # Router setup
-│   ├── index.css               # Tailwind v4 entry (@import "tailwindcss")
-│   └── main.jsx                # Preact render entry point
-├── server/                     # Backend (Hapi.js)
+│   │   ├── home.jsx
+│   │   ├── login.jsx           # Password + email code + OAuth tabs
+│   │   ├── register.jsx
+│   │   ├── dashboard.jsx       # Protected page, account deletion
+│   │   ├── forgot-password.jsx # Password reset request form
+│   │   └── reset-password.jsx  # Set new password form
+│   ├── app.jsx
+│   ├── index.css
+│   └── main.jsx
+├── server/
 │   ├── auth/
-│   │   └── strategy.js         # JWT-in-cookie Hapi auth scheme + token generation
+│   │   └── strategy.js
 │   ├── migrations/
-│   │   └── 001_initial.sql     # users + email_codes tables
+│   │   ├── 001_initial.sql
+│   │   └── 002_v1_1_features.sql  # oauth_accounts, password_reset_tokens, files tables
+│   ├── plugins/
+│   │   └── rate-limit.js       # In-memory rate limiting plugin
 │   ├── routes/
-│   │   ├── auth.js             # Auth endpoints (register, login, codes, logout, me)
-│   │   └── api.js              # App endpoints (health check)
+│   │   ├── auth.js             # Auth endpoints + password reset + account deletion + providers
+│   │   ├── api.js              # Health check + broadcast
+│   │   ├── oauth.js            # OAuth strategies (Google, GitHub, Microsoft)
+│   │   └── uploads.js          # File upload/download/delete
 │   ├── services/
-│   │   └── email.js            # Nodemailer transporter for sending login codes
-│   ├── config.js               # Reads env vars into a config object
-│   ├── db.js                   # pg Pool connected via DATABASE_URL
-│   ├── index.js                # Hapi server init, plugin registration, static serving
-│   └── migrate.js              # SQL migration runner
-├── docs/                       # This documentation (Jekyll + GitHub Pages)
-├── docker-compose.yml          # App + Postgres services
-├── Dockerfile                  # Multi-stage production build
-├── index.html                  # Vite HTML entry point
-├── vite.config.js              # Vite + Preact + Tailwind plugins, API proxy
+│   │   └── email.js            # Login codes + password reset emails
+│   ├── test/
+│   │   ├── helpers.js          # Test server builder + utilities
+│   │   ├── auth.test.js
+│   │   ├── oauth.test.js
+│   │   ├── uploads.test.js
+│   │   ├── api.test.js
+│   │   └── websocket.test.js
+│   ├── config.js
+│   ├── db.js
+│   ├── index.js
+│   ├── migrate.js
+│   └── validate-config.js      # Startup configuration validation
+├── uploads/                     # User-uploaded files (gitignored)
+├── docs/
+├── docker-compose.yml
+├── Dockerfile
+├── index.html
+├── vite.config.js
 ├── package.json
-├── .env.example                # Template for environment variables
+├── .env.example
 ├── .gitignore
 └── .dockerignore
 ```
@@ -97,3 +113,9 @@ Browser → :3001 (Hapi)
 - **SQL migrations** — plain `.sql` files, run in alphabetical order, tracked in a `migrations` table. No migration framework needed.
 - **Dual auth strategies** — password and email code auth are independently toggleable via env vars. Both can run simultaneously.
 - **Vite proxying in dev** — the frontend fetches `/api/...` without caring whether it's dev or production. No CORS issues, no separate API URLs to manage.
+- **CSRF via @hapi/crumb** — restful mode, token in cookie readable by JS, sent as x-csrf-token header.
+- **In-memory rate limiting** — simple Map-based rate limiter with periodic cleanup, configured per-route via tags.
+- **OAuth via @hapi/bell** — providers independently toggleable, automatic account linking by email.
+- **WebSocket via @hapi/nes** — built on Hapi's native WebSocket support, subscription-based pub/sub.
+- **Startup validation** — config is validated before the server starts, preventing misconfiguration in production.
+- **File uploads** — stored on disk in uploads/ directory, metadata in PostgreSQL.

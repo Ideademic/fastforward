@@ -1,6 +1,6 @@
 {
   "name": "fastforward",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -9,12 +9,16 @@
     "dev:server": "nodemon --watch server server/index.js",
     "build": "vite build",
     "start": "NODE_ENV=production node server/index.js",
-    "migrate": "node server/migrate.js"
+    "migrate": "node server/migrate.js",
+    "test": "lab server/test/ -m 30000 --leaks=false"
   },
   "dependencies": {
+    "@hapi/bell": "^13.0.2",
     "@hapi/boom": "^10.0.1",
+    "@hapi/crumb": "^9.0.1",
     "@hapi/hapi": "^21.3.12",
     "@hapi/inert": "^7.1.0",
+    "@hapi/nes": "^14.0.1",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "joi": "^17.13.3",
@@ -25,6 +29,8 @@
     "preact-router": "^4.1.2"
   },
   "devDependencies": {
+    "@hapi/code": "^9.0.3",
+    "@hapi/lab": "^25.3.1",
     "@preact/preset-vite": "^2.9.3",
     "@tailwindcss/vite": "^4.0.0",
     "concurrently": "^9.1.2",

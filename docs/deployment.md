@@ -27,6 +27,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 COPY --from=build /app/dist ./dist
 COPY server ./server
+RUN mkdir -p /app/uploads
 EXPOSE 3001
 ENV NODE_ENV=production
 CMD ["node", "server/index.js"]
@@ -63,6 +64,8 @@ services:
     env_file: .env
     environment:
       DATABASE_URL: postgres://fastforward:fastforward@postgres:5432/fastforward
+    volumes:
+      - uploads:/app/uploads
     depends_on:
       postgres:
         condition: service_healthy
@@ -86,6 +89,7 @@ services:
 
 volumes:
   pgdata:
+  uploads:
 ```
 
 The `environment` block overrides `DATABASE_URL` from `.env` so the app container reaches Postgres by service name (`postgres`) instead of `localhost`.
@@ -111,6 +115,8 @@ services:
     env_file: .env
     environment:
       DATABASE_URL: postgres://fastforward:fastforward@postgres:5432/fastforward
+    volumes:
+      - uploads:/app/uploads
     depends_on:
       postgres:
         condition: service_healthy
@@ -138,6 +144,7 @@ services:
 
 volumes:
   pgdata:
+  uploads:
 
 networks:
   internal:
@@ -184,4 +191,7 @@ Do **not** run `npm run migrate` from the host — the host can't reach Postgres
 - [ ] Configure real SMTP credentials for email code auth (or disable it)
 - [ ] Set up SSL (via reverse proxy or a TLS-terminating load balancer)
 - [ ] Back up the `pgdata` volume
+- [ ] Configure OAuth provider credentials if using OAuth
+- [ ] Ensure the `uploads` volume is mounted and backed up
+- [ ] Set `APP_URL` to your production domain
 - [ ] Consider adding rate limiting to auth endpoints (see [Authentication — Extending Auth](auth#extending-auth))

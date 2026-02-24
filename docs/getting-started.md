@@ -59,6 +59,7 @@ The app is at `http://localhost:3001`. See [Deployment](deployment) for producti
 | `npm run build` | Build frontend for production |
 | `npm run start` | Start Hapi in production mode (serves built frontend) |
 | `npm run migrate` | Run database migrations (local dev) |
+| `npm test` | Run the test suite (requires Postgres) |
 
 ## Email in Development
 
@@ -69,3 +70,7 @@ docker run -d -p 1025:1025 -p 8025:8025 axllent/mailpit
 ```
 
 The default SMTP settings in `.env.example` point to `localhost:1025`. View captured emails at `http://localhost:8025`.
+
+## OAuth Setup
+
+To enable OAuth providers, set the appropriate env vars (e.g. `OAUTH_GOOGLE_ENABLED=true`, `OAUTH_GOOGLE_CLIENT_ID=...`, `OAUTH_GOOGLE_CLIENT_SECRET=...`). See [Configuration](configuration) docs for all OAuth variables. Callback URLs follow the pattern: `APP_URL/api/auth/oauth/{provider}`.

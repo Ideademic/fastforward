@@ -9,6 +9,8 @@ import { Home } from './pages/home.jsx';
 import { Login } from './pages/login.jsx';
 import { Register } from './pages/register.jsx';
 import { Dashboard } from './pages/dashboard.jsx';
+import { ForgotPassword } from './pages/forgot-password.jsx';
+import { ResetPassword } from './pages/reset-password.jsx';
 
 export function App() {
   const [url, setUrl] = useState('/');
@@ -21,6 +23,8 @@ export function App() {
           <Login path="/login" />
           <Register path="/register" />
           <Dashboard path="/dashboard" />
+          <ForgotPassword path="/forgot-password" />
+          <ResetPassword path="/reset-password" />
         </Router>
       </Layout>
     </AuthProvider>

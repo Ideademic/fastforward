@@ -32,7 +32,7 @@ export function registerAuth(server) {
 
 export function generateToken(user) {
   return jwt.sign(
-    { id: user.id, username: user.username, email: user.email },
+    { id: user.id, username: user.username, email: user.email, display_name: user.display_name },
     config.jwtSecret,
     { expiresIn: config.jwtExpiry },
   );

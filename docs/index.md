@@ -17,7 +17,10 @@ A ready-to-go Node.js boilerplate with **Preact**, **Hapi.js**, **Postgres**, an
 
 - **Frontend** — Vite + Preact with Tailwind CSS v4 (Vite plugin). Includes client-side routing, auth context, and example pages.
 - **Backend** — Hapi.js server with Joi validation, JWT cookie auth, and a clean route structure.
-- **Auth** — Password-based and email-code-based authentication, independently toggleable. Secure by default (bcrypt, httpOnly cookies, SameSite).
+- **Auth** — Password, email code, and OAuth (Google, GitHub, Microsoft) authentication. Password reset. Account deletion. CSRF protection and rate limiting built-in.
+- **File Uploads** — Upload, serve, and delete files with per-user ownership.
+- **WebSocket** — Real-time pub/sub via @hapi/nes with example broadcast endpoint.
+- **Testing** — Test suite using @hapi/lab and @hapi/code.
 - **Database** — PostgreSQL with a simple SQL migration runner.
 - **Docker** — Multi-stage Dockerfile and Compose config. Works standalone or behind a reverse proxy.
 

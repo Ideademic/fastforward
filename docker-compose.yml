@@ -6,6 +6,8 @@ services:
     env_file: .env
     environment:
       DATABASE_URL: postgres://fastforward:fastforward@postgres:5432/fastforward
+    volumes:
+      - uploads:/app/uploads
     depends_on:
       postgres:
         condition: service_healthy
@@ -29,3 +31,4 @@ services:
 
 volumes:
   pgdata:
+  uploads:

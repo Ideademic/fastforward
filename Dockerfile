@@ -11,6 +11,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 COPY --from=build /app/dist ./dist
 COPY server ./server
+RUN mkdir -p /app/uploads
 EXPOSE 3001
 ENV NODE_ENV=production
 CMD ["node", "server/index.js"]
